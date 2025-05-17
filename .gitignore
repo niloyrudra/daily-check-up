@@ -3,6 +3,15 @@
 # dependencies
 node_modules/
 
+.env
+
+android/
+ios/
+
+# EAS
+eas.json
+
+
 # Expo
 .expo/
 dist/
