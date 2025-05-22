@@ -112,7 +112,7 @@ const DashboardScreen: React.FC = () => {
                     <MaterialIcons name="pending-actions" size={24} color="orange" />
                   )}
                 </Card.Content>
-                {item[0] === 'contact2' && (<Divider style={{ backgroundColor: "#333" }} />)}
+                {item[0] === 'contact1' && (<Divider style={{ backgroundColor: "#333" }} />)}
               </React.Fragment>
             )})
           ) : (

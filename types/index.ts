@@ -7,7 +7,7 @@ import { ColorValue, InputModeOptions, KeyboardType, StyleProp, TextStyle, ViewS
 
 type WritableTimestamp = Timestamp | FieldValue;
 
-type Plan = "free" | "monthly" | "yearly";
+type Plan = "" | "basic" | "premium"; //  "free" | "monthly" | "yearly";
 
 type Contact = {
   contactName?: string,
@@ -29,14 +29,12 @@ type UserData = {
   emailVerified: boolean,
   phoneNumber: string,
   phoneNumberVerified: boolean,
-  
+  optInStatus?: boolean,
   // Two distinct contacts
   contactNumbers: {
     contact1: Contact,
     contact2: Contact,
   },
-  contactNumbersVerified: boolean,  
-
   // any schedule flags by id
   schedules: Record<string, boolean>,
 

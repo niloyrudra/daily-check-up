@@ -169,6 +169,7 @@ const styles = StyleSheet.create({
   formGroup: {
     gap: 20,
     width: SIZES.screenBodyWidth,
+    alignItems:"center"
   },
   label: {
     fontSize: SIZES.title,

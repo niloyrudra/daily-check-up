@@ -18,6 +18,7 @@ const OnboardingScreenThree: React.FC = () => {
           flex: 1,
           gap: 40,
           justifyContent: "flex-start",
+          alignItems:"center",
           paddingVertical: 20
         }}
       >

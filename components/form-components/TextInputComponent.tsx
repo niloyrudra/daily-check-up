@@ -77,6 +77,7 @@ const styles = StyleSheet.create({
         borderRadius: 10, // 16,
         borderWidth: 1,
         borderColor: "#aaa",
-        fontSize: SIZES.fontSizeTextInput
+        fontSize: SIZES.fontSizeTextInput,
+        width: SIZES.screenBodyWidth
     }
 });

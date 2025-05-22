@@ -3,6 +3,7 @@ import PlainTextLink from "@/components/form-components/auth/PlainTextLink";
 import TextInputComponent from "@/components/form-components/TextInputComponent";
 import AuthScreenLayout from "@/components/layout/AuthScreenLayout";
 import { auth, signInWithEmailAndPassword } from "@/config/firebase";
+import SIZES from "@/constants/size";
 import { Theme } from "@/constants/theme";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Link, useRouter } from "expo-router";
@@ -51,7 +52,8 @@ const Login: React.FC = () => {
         {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
           <View
             style={{
-              gap: 20
+              gap: 20,
+              width: SIZES.screenBodyWidth
             }}
           >
             <TextInputComponent

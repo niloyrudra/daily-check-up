@@ -7,11 +7,11 @@ import { StyleSheet, TouchableOpacity } from 'react-native';
 type FeatherIconName = keyof typeof Feather.glyphMap;
 
 interface ArrowButtonProps {
-  iconName: FeatherIconName,
-  size: number
+  iconName?: FeatherIconName,
+  size?: number
 }
 
-const ArrowButton: React.FC<ArrowButtonProps> = ({ iconName, size }) => {
+const ArrowButton: React.FC<ArrowButtonProps> = ({ iconName="arrow-left", size=24 }) => {
   return (
     <TouchableOpacity onPress={() => router.back()} style={styles.arrowLeftButton}>
       <Feather name={iconName} size={size} color={Theme.primary} />

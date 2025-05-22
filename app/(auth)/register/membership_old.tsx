@@ -2,14 +2,12 @@ import ArrowButton from "@/components/ArrowButton";
 import ActionPrimaryButton from "@/components/form-components/ActionPrimaryButton";
 import AuthScreenLayout from "@/components/layout/AuthScreenLayout";
 import { auth, db } from "@/config/firebase";
-import SIZES from "@/constants/size";
-import { Theme } from "@/constants/theme";
 import * as Linking from "expo-linking";
 import { useRouter } from "expo-router";
 import { getIdToken } from "firebase/auth";
 import { doc, Timestamp, updateDoc } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, Alert, Text, View } from "react-native";
+import { ActivityIndicator, Alert, View } from "react-native";
 
 const BASE_URL = process.env.EXPO_PUBLIC_BASE_URL || "";
 
@@ -39,7 +37,7 @@ const MembershipScreen: React.FC = () => {
     return () => unsubscribe();
   }, []);
 
-  const handleCheckout = async (plan: "basic" | "premium" ) => {
+  const handleCheckout = async (plan: "free" | "monthly" | "yearly") => {
     setLoading(true)
     try {
       const user = auth.currentUser;
@@ -71,13 +69,12 @@ const MembershipScreen: React.FC = () => {
           });
 
         } else {
-          Alert.alert("Oops!", "Checkout unsuccessful.");
+          Alert.alert("Failed to start checkout.");
         }
       });
     }
     catch( error: any ) {
       console.error( error )
-      Alert.alert("Oops!", "Checkout unsuccessful.");
     }
     finally {
       setLoading(false)
@@ -93,29 +90,20 @@ const MembershipScreen: React.FC = () => {
   }
 
   return (
-    <AuthScreenLayout title="Membership Plans" isScrollable={true}>
+    <AuthScreenLayout title="Membership Plans">
 
-      <ArrowButton />
+      <ArrowButton
+        iconName="arrow-left"
+        size={24}
+      />
 
       {loading ? (
-        <ActivityIndicator size="large" color={Theme.primary} />
+        <ActivityIndicator size="large" />
       ) : (
-        <View style={{gap: 40}}>
-          <View style={{ gap: 20, borderWidth: 1, borderColor: Theme.primary, borderRadius: 8, padding: 15}}>
-            <Text style={{fontSize: SIZES.contentText, color: Theme.primary}}>
-              We will text you one time each day, at your appointed time. You pick how long we must wait for your answer (1, 2 OR 3 hours), if after your selected time frame, you have not texted &apos;YES&apos; back, we will text your emergency contacts to let them know. Basic Plan $0.99/mo billed annually $11.88 after free trial.
-            </Text>
-            <ActionPrimaryButton buttonTitle="Start your 7 day Free Trial" onSubmit={() => handleCheckout("basic")} />
-          </View>
-          
-          {/* <View style={{height:0, width: "100%", borderBottomWidth: 1, borderBottomColor: Theme.primary, marginVertical: 30}} /> */}
-
-          <View style={{ gap: 20, borderWidth: 1, borderColor: Theme.primary, borderRadius: 8, padding: 15}}>
-            <Text style={{fontSize: SIZES.contentText, color: Theme.primary}}>
-              We will text you 2 times each day, at your appointed time and 1 hour later, if after 2 hours and 2 texts, you have not texted &apos;YES&apos; back, we will call you to make sure you hear the phone ring. After you don&apos;t answer 2 texts and 1 phone call, we will text your emergency contacts to let them know. Premium Plan $1.99/mo billed annually $23.88 after free trial.
-            </Text>
-            <ActionPrimaryButton buttonTitle="Start your 7 day Free Trial" onSubmit={() => handleCheckout("premium")} />
-          </View>
+        <View style={{ gap: 20 }}>
+          <ActionPrimaryButton buttonTitle="Free" onSubmit={() => handleCheckout("free")} />
+          <ActionPrimaryButton buttonTitle="Monthly $1.99" onSubmit={() => handleCheckout("monthly")} />
+          <ActionPrimaryButton buttonTitle="Yearly $23.88" onSubmit={() => handleCheckout("yearly")} />
         </View>
       )}
     </AuthScreenLayout>

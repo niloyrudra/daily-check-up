@@ -17,13 +17,16 @@ const SignUpScreenSchema = Yup.object().shape({
     name: Yup.string().min(2, "Name must be at least 2 characters").required("Name is required"),
     email: Yup.string().email("Invalid email").required("Email is required"),
     password: Yup.string().min(6, "Password must be at least 6 characters").required("Password is required"),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref("password")], "Passwords must match")
+      .required("Confirm Password is required"),
     zipCode: Yup.string().min(2, "Name must be at least 2 characters").required("Zip Code is required"),
     country: Yup.string().required("Country is required"),
 });
 
 const defaultMembershipPlan: MembershipPlan = {
-  plan: "free",              // user starts on the free tier
-  status: "active",         // pending until they actively subscribe
+  plan: "",              // user starts on the free tier
+  status: "pending",         // pending until they actively subscribe
   since: serverTimestamp()   // Firestore timestamp when this record is created
 };
 
@@ -59,9 +62,9 @@ const SignUpScreen: React.FC = () => {
         country,
         email,
         emailVerified: false,
+        optInStatus: false,
         phoneNumber: "",
         phoneNumberVerified: false,
-        contactNumbersVerified: false,
         contactNumbers: {
           contact1: { contactName: "", phoneNumber: "", verified: false },
           contact2: { contactName: "", phoneNumber: "", verified: false }
@@ -73,7 +76,6 @@ const SignUpScreen: React.FC = () => {
   
       // 3️⃣ Write to Firestore using setDoc
       await setDoc(doc(db, "users", userCredential.user.uid), userData);
-      // console.log("New User saved:", userCredential.user.uid);
   
       // 4️⃣ Navigate to the “verify email” screen
       router.push("/(auth)/register/verify-email");
@@ -88,7 +90,7 @@ const SignUpScreen: React.FC = () => {
     <AuthScreenLayout title="Sign Up" isScrollable={true}>
 
       <Formik
-        initialValues={{ name: "", zipCode: "", country: "", email: "", password: "" }}
+        initialValues={{ name: "", zipCode: "", country: "", email: "", password: "", confirmPassword: "" }}
         validationSchema={SignUpScreenSchema}
         onSubmit={(values) => handleSignUpScreen(values.name, values.zipCode, values.country, values.email, values.password)}
       >
@@ -97,7 +99,6 @@ const SignUpScreen: React.FC = () => {
             style={{
               gap: 20,
               width: SIZES.screenBodyWidth,
-              // backgroundColor: "red"
             }}
           >
             <TextInputComponent
@@ -128,7 +129,16 @@ const SignUpScreen: React.FC = () => {
             {errors.password && touched.password && <Text>{errors.password}</Text>}
 
             <TextInputComponent
-              placeholder="1234 5678"
+              placeholder="Confirm Password"
+              isPassword={true}
+              value={values.confirmPassword}
+              onChange={handleChange("confirmPassword")}
+              onBlur={handleBlur("confirmPassword")}
+            />
+            {errors.confirmPassword && touched.confirmPassword && <Text>{errors.confirmPassword}</Text>}
+
+            <TextInputComponent
+              placeholder="Zip-code"
               inputMode="text"
               value={values.zipCode}
               onChange={handleChange("zipCode")}
@@ -150,7 +160,6 @@ const SignUpScreen: React.FC = () => {
               buttonTitle="Sign Up"
               onSubmit={handleSubmit}
               isLoading={loading}
-              // buttonStyle={{marginTop: 20}}
             />
           </View>
         )}

@@ -127,7 +127,10 @@ const ContactsVerificationScreen: React.FC = () => {
         if (contactKey === "contact1") setStep1("enterCode");
         else setStep2("enterCode");
 
+        router.push( "/(auth)/register/opt-in" );
+
       } else {
+        Alert.alert("Sorry!", `Number verification is failed!`);
         throw new Error("Invalid code");
       }
     } catch (error) {
@@ -214,12 +217,9 @@ const ContactsVerificationScreen: React.FC = () => {
   return (
     <AuthScreenLayout title="Emergency Contacts" isScrollable={true}>
       
-      <ArrowButton
-        iconName="arrow-left"
-        size={24}
-      />
+      <ArrowButton />
 
-      <TouchableOpacity onPress={() => router.push("/(auth)/register/membership")} style={styles.skipButton}>
+      <TouchableOpacity onPress={() => router.push("/(auth)/register/opt-in")} style={styles.skipButton}>
         <Text style={{fontSize: SIZES.contentText}}>SKIP</Text>
       </TouchableOpacity>
 
@@ -239,6 +239,7 @@ const styles = StyleSheet.create({
   formGroup: {
     gap: 20,
     width: SIZES.screenBodyWidth,
+    alignItems:"center"
   },
   label: {
     fontWeight: "600",
