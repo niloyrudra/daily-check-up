@@ -4,6 +4,7 @@ import AuthScreenLayout from "@/components/layout/AuthScreenLayout";
 import { auth, db } from "@/config/firebase";
 import SIZES from "@/constants/size";
 import { Theme } from "@/constants/theme";
+import { Plan } from "@/types";
 import * as Linking from "expo-linking";
 import { useRouter } from "expo-router";
 import { getIdToken } from "firebase/auth";
@@ -39,7 +40,7 @@ const MembershipScreen: React.FC = () => {
     return () => unsubscribe();
   }, []);
 
-  const handleCheckout = async (plan: "basic" | "premium" ) => {
+  const handleCheckout = async (plan: Plan ) => {
     setLoading(true)
     try {
       const user = auth.currentUser;
@@ -51,7 +52,8 @@ const MembershipScreen: React.FC = () => {
         },
         body: JSON.stringify({
           plan,
-          quantity: 1
+          quantity: 1,
+          userId: user.uid
         })
       })
       .then(res => res.json())

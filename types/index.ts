@@ -40,7 +40,14 @@ type UserData = {
 
   membershipPlan: MembershipPlan,
   createdAt: WritableTimestamp,
-  state?: null | undefined | boolean
+  state?: null | undefined | boolean,
+  
+  stripeCustomerId?: string,
+  stripeSubscriptionId?: string,
+  paymentHistory?: {
+    type: 'paid' | 'failed',
+    at: WritableTimestamp
+  }[]
 }
 
 type AuthUser =  User | null;

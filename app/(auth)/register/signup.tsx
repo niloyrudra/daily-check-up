@@ -71,7 +71,9 @@ const SignUpScreen: React.FC = () => {
         },
         schedules: {},
         createdAt: serverTimestamp(),       // ← server timestamp :contentReference[oaicite:9]{index=9}
-        membershipPlan: defaultMembershipPlan
+        membershipPlan: defaultMembershipPlan,
+        stripeCustomerId: '',
+        stripeSubscriptionId: '',
       };
   
       // 3️⃣ Write to Firestore using setDoc
@@ -147,7 +149,7 @@ const SignUpScreen: React.FC = () => {
             {errors.zipCode && touched.zipCode && <Text>{errors.zipCode}</Text>}
 
             <TextInputComponent
-              placeholder="Country Name"
+              placeholder="Country"
               inputMode="text"
               value={values.country}
               onChange={handleChange("country")}

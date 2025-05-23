@@ -30,7 +30,7 @@ const OnboardingScreenThree: React.FC = () => {
 
         <OnboardingInfoComponent
           iconName="shield-dog"
-          content="Your pets and young children can be quickly tended to, should anything happen yo you."
+          content="Your pets and young children can be quickly tended to, should anything happen to you."
         />
 
         <OnboardingInfoComponent

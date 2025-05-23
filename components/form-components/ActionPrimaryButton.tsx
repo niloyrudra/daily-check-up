@@ -30,7 +30,7 @@ export default ActionPrimaryButton;
 
 const styles = StyleSheet.create({
     content: {
-        width: "auto", // SIZES.screenBodyWidth,
+        // width: "auto", // SIZES.screenBodyWidth,
         borderRadius: 40,
         height: SIZES.buttonHeight,
         marginBottom: SIZES.marginBottom,
